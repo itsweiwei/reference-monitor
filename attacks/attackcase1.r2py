@@ -1,0 +1,16 @@
+#Cleanup
+if "testfile.txt.a" in listfiles():
+  removefile("-testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("-testfile.txt.b")
+
+# Attack - Attempting to create an invalid file name using a hyphen or underscore as the first letter
+# If attack is successfully blocked, should raise an error
+
+testfile = ABopenfile("-testfile.txt", True)
+testfile.close()
+
+try:
+    assert(not "-testfile.txt.a" in listfiles() and not "-testfile.txt.b" in listfiles())
+except:
+    log("Invalid filename found")

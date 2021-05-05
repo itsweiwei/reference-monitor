@@ -1,0 +1,15 @@
+#Cleanup
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Attack - Concurrently writing to the same file using threads
+testfile = ABopenfile("testfile.txt", True)
+# If its properly set up with locks, should raise error
+try:
+    testfile.writeat("SnormaltextE", 0)
+    createthread(testfile.writeat("SthreadingattemptE", 0))
+    testfile.close()
+except:
+    log("Cannot write with multiple processes at the same time")

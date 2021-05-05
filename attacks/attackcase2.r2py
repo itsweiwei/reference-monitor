@@ -1,0 +1,19 @@
+# Cleanup
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Attack - Data corruption, change the content's of the file
+# Create a new empty file first (should have SE as content at creation)
+testfile = ABopenfile("testfile.txt", True)
+# Replace contents with corrupted content
+testfile.writeat("corruptedcontent", 0)
+testfile.close()
+
+# Check to see if file is still valid (whether close checked for data corruption)
+# If file still reads SE, attack was defended against, otherwise data was corrupted
+try:
+    assert('SE' == testfile.readat(None, 0))
+except:
+    log("File data corrupted")

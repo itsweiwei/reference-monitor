@@ -1,0 +1,13 @@
+#Cleanup
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+testfile = ABopenfile("testfile.txt", True)
+
+# Attack - bounds checking, attempt to write information out of bounds
+# If the attack is defended, should raise
+try:
+    testfile.writeat("SgoingoutofboundsE", -1)
+except:
+    log("Cannot write outside of bounds of file")

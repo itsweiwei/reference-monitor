@@ -1,0 +1,13 @@
+#Cleanup
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+testfile = ABopenfile("testfile.txt", True)
+testfile.close()
+# Attack - Opening same file multiple times
+# if the content is properly saved while reopening, attack blocked
+try:
+    testfile2 = ABopenfile("testfile.txt", True)
+except:
+    log("Attempted to open multiple instances of same file at the same time")
